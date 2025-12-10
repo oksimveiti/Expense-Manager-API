@@ -2,6 +2,7 @@ package com.semihcetin.project.expensemanagerapi.controller;
 
 import com.semihcetin.project.expensemanagerapi.entity.Expense;
 import com.semihcetin.project.expensemanagerapi.repository.ExpenseRepository;
+import com.semihcetin.project.expensemanagerapi.service.ExpenseService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,19 +11,34 @@ import java.util.List;
 @RequestMapping("api/expenses")
 public class ExpenseController {
 
-    private final ExpenseRepository expenseRepository;
+    private final ExpenseService expenseService;
 
-    public ExpenseController(ExpenseRepository expenseRepository) {
-        this.expenseRepository = expenseRepository;
+    public ExpenseController(ExpenseService expenseService) {
+        this.expenseService = expenseService;
     }
 
     @GetMapping
     public List<Expense> gelAllExpenses() {
-        return expenseRepository.findAll();
+        return expenseService.getAllExpenses();
     }
 
     @PostMapping
     public Expense createExpense(@RequestBody Expense expense) {
-        return expenseRepository.save(expense);
+        return expenseService.createExpense(expense);
+    }
+
+    @GetMapping("/{id}")
+    public Expense getExpenseById(@PathVariable Long id) {
+        return expenseService.getExpenseById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
+        return expenseService.updateExpense(id, expense);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteExpenseById(@PathVariable Long id) {
+        expenseService.deleteExpense(id);
     }
 }
