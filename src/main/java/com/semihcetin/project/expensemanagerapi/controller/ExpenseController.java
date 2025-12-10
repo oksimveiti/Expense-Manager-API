@@ -3,12 +3,15 @@ package com.semihcetin.project.expensemanagerapi.controller;
 import com.semihcetin.project.expensemanagerapi.entity.Expense;
 import com.semihcetin.project.expensemanagerapi.repository.ExpenseRepository;
 import com.semihcetin.project.expensemanagerapi.service.ExpenseService;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/expenses")
+@Validated
 public class ExpenseController {
 
     private final ExpenseService expenseService;
@@ -23,7 +26,7 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public Expense createExpense(@RequestBody Expense expense) {
+    public Expense createExpense(@Valid @RequestBody Expense expense) {
         return expenseService.createExpense(expense);
     }
 
@@ -33,7 +36,7 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
+    public Expense updateExpense(@PathVariable Long id, @Valid @RequestBody Expense expense) {
         return expenseService.updateExpense(id, expense);
     }
 
