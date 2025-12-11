@@ -1,6 +1,7 @@
 package com.semihcetin.project.expensemanagerapi.service;
 
 import com.semihcetin.project.expensemanagerapi.entity.Expense;
+import com.semihcetin.project.expensemanagerapi.entity.User;
 import com.semihcetin.project.expensemanagerapi.exception.ResourceNotFoundException;
 import com.semihcetin.project.expensemanagerapi.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
@@ -12,18 +13,21 @@ import java.util.List;
 public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
+    private final UserService userService;
 
-    public ExpenseService(ExpenseRepository expenseRepository) {
+    public ExpenseService(ExpenseRepository expenseRepository,  UserService userService) {
 
         this.expenseRepository = expenseRepository;
+        this.userService = userService;
     }
 
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
     }
 
-    public Expense createExpense(@RequestBody Expense expense) {
-
+    public Expense createExpense(@RequestBody Expense expense, Long userId) {
+        User user = userService.getUserById(userId);
+        expense.setUser(user);
         return expenseRepository.save(expense);
     }
 

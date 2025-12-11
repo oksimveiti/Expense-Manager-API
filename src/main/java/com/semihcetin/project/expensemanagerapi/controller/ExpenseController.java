@@ -25,9 +25,9 @@ public class ExpenseController {
         return expenseService.getAllExpenses();
     }
 
-    @PostMapping
-    public Expense createExpense(@Valid @RequestBody Expense expense) {
-        return expenseService.createExpense(expense);
+    @PostMapping("/user/{userId}")
+    public Expense createExpense(@PathVariable Long userId, @Valid @RequestBody Expense expense) {
+        return expenseService.createExpense(expense, userId);
     }
 
     @GetMapping("/{id}")

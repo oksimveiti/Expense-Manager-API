@@ -30,14 +30,20 @@ public class Expense {
     @NotNull(message = "Tarih bos olamaz")
     private LocalDate date;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
+
+
     public Expense() {
     }
 
-    public Expense(String title, String description, BigDecimal amount, LocalDate date) {
+    public Expense(String title, String description, BigDecimal amount, LocalDate date, User user) {
         this.title = title;
         this.description = description;
         this.amount = amount;
         this.date = date;
+        this.user = user;
     }
 
     public Long getId() {
@@ -78,5 +84,13 @@ public class Expense {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
