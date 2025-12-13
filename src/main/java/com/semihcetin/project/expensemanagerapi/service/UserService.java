@@ -28,4 +28,18 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    public User loginUser(com.semihcetin.project.expensemanagerapi.dto.LoginRequest loginRequest){
+        // Do we have the user?
+        User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        // Password check
+        if (!user.getPassword().equals(loginRequest.getPassword())){
+            throw new RuntimeException("Incorrect password");
+        }
+
+        // if successfully, return the user
+        return user;
+
+    }
+
 }

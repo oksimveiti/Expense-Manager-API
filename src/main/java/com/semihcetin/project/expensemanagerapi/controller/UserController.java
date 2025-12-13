@@ -1,5 +1,6 @@
 package com.semihcetin.project.expensemanagerapi.controller;
 
+import com.semihcetin.project.expensemanagerapi.dto.LoginRequest;
 import com.semihcetin.project.expensemanagerapi.entity.User;
 import com.semihcetin.project.expensemanagerapi.service.UserService;
 import jakarta.validation.Valid;
@@ -25,5 +26,10 @@ public class UserController {
     @PostMapping
     public User createUser(@Valid @RequestBody User user ) {
         return userService.createUser( user );
+    }
+
+    @PostMapping("/login")
+    public User login(@RequestBody LoginRequest loginRequest) {
+        return userService.loginUser(loginRequest);
     }
 }
